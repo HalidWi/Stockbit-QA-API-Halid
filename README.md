@@ -297,7 +297,8 @@ mvn test -Dtest=CucumberRunner
 You can run tests directly from your IDE:
 1. Navigate to `src/test/java/com/stockbit/qa/runner/`
 2. Right-click on `TestRunner.java` or `CucumberRunner.java`
-3. Select "Run" or "Debug"
+3. Edit this tag @ConfigurationParameter(key = FILTER_TAGS_PROPERTY_NAME, value = "@yourtaghere")
+4. Select "Run" or "Debug"
 
 ### Run Tests by Tag
 
