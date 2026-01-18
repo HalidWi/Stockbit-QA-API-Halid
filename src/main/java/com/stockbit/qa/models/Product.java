@@ -22,19 +22,21 @@ public class Product {
     private String ean;
     private String upc;
     private String image;
-    private List<String> images;
+    private List<ProductImage> images;
     private double price;
-    private List<String> categories;
+    private List<Integer> categories;
     private double net_price;
-    private List<Tax> taxes;
+    private int taxes;  // API returns taxes as an integer percentage
+    private List<String> tags;
     
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class Tax {
-        private String name;
-        private double value;
+    public static class ProductImage {
+        private String title;
+        private String description;
+        private String url;
     }
 }
 

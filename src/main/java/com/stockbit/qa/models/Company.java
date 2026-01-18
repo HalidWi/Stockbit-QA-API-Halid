@@ -24,8 +24,8 @@ public class Company {
     private String country;
     private String website;
     private String image;
-    private List<Contact> contact;
-    private List<String> addresses;
+    private Contact contact;  // Single contact object, not a list
+    private List<Address> addresses;
     
     @Data
     @NoArgsConstructor
@@ -39,6 +39,23 @@ public class Company {
         private String phone;
         private String birthday;
         private String gender;
+    }
+    
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Address {
+        private int id;
+        private String street;
+        private String streetName;
+        private String buildingNumber;
+        private String city;
+        private String zipcode;
+        private String country;
+        private String country_code;
+        private double latitude;
+        private double longitude;
     }
 }
 

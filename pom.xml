@@ -5,12 +5,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.stockbit.qa</groupId>
-    <artifactId>fakerapi-automation</artifactId>
+    <artifactId>stockbit-api-automation</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>FakerAPI Automation Test</name>
-    <description>API Automation Test Framework using Java + Cucumber + JUnit for FakerAPI</description>
+    <name>StockBit API Automation Test</name>
+    <description>API Automation Test Framework using Java + Cucumber + Spring + JUnit for Stockbit QA Engineer Test</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.1</version>
+        <relativePath/>
+    </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -21,10 +28,37 @@
         <restassured.version>5.4.0</restassured.version>
         <jackson.version>2.16.1</jackson.version>
         <lombok.version>1.18.30</lombok.version>
-        <slf4j.version>2.0.9</slf4j.version>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>2.16.1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
+        <!-- Spring Boot Dependencies -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
         <!-- Cucumber Dependencies -->
         <dependency>
             <groupId>io.cucumber</groupId>
@@ -40,7 +74,7 @@
         </dependency>
         <dependency>
             <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-picocontainer</artifactId>
+            <artifactId>cucumber-spring</artifactId>
             <version>${cucumber.version}</version>
             <scope>test</scope>
         </dependency>
@@ -64,13 +98,11 @@
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
             <version>${restassured.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>json-schema-validator</artifactId>
             <version>${restassured.version}</version>
-            <scope>test</scope>
         </dependency>
 
         <!-- Jackson for JSON Processing -->
@@ -86,19 +118,6 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
             <scope>provided</scope>
-        </dependency>
-
-        <!-- Logging -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>${slf4j.version}</version>
-            <scope>test</scope>
         </dependency>
 
         <!-- AssertJ for fluent assertions -->
@@ -120,6 +139,18 @@
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-configuration-processor</artifactId>
+                            <version>3.2.1</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
 
@@ -131,10 +162,24 @@
                 <configuration>
                     <includes>
                         <include>**/TestRunner.java</include>
+                        <include>**/CucumberRunner.java</include>
                     </includes>
+                </configuration>
+            </plugin>
+
+            <!-- Spring Boot Maven Plugin -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>
     </build>
 </project>
-

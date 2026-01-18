@@ -7,19 +7,12 @@ import org.junit.platform.suite.api.Suite;
 
 import static io.cucumber.junit.platform.engine.Constants.*;
 
-/**
- * Cucumber Test Runner using JUnit Platform Suite.
- * Configures and executes all Cucumber feature files.
- */
 @Suite
 @IncludeEngines("cucumber")
 @SelectClasspathResource("features")
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "pretty, html:target/cucumber-reports/cucumber.html, json:target/cucumber-reports/cucumber.json")
-@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.stockbit.qa.stepdefinitions")
-@ConfigurationParameter(key = FILTER_TAGS_PROPERTY_NAME, value = "not @ignored")
-@ConfigurationParameter(key = SNIPPET_TYPE_PROPERTY_NAME, value = "camelcase")
+@ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "com.stockbit.qa")
+@ConfigurationParameter(key = FILTER_TAGS_PROPERTY_NAME, value = "not @ignore")
 public class TestRunner {
-    // This class serves as an entry point for Cucumber tests
-    // No additional code is needed - annotations handle configuration
+    // This class will be used by JUnit to discover and run Cucumber tests
 }
-
